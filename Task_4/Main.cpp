@@ -1,24 +1,44 @@
 #include <iostream>
+#include <math.h>
 
-bool fun(int n)
+void fun(int *array, int n, int length)
 {
-    int sum=0;
-    for(int i=0;i<n;i++)
+    // -------Создадим массив-дублёр, с которого будем брать данные
+    int mas[length];
+    for(int m = 0; m < length; m++)
     {
-        sum+=i;
+        mas[m] = array[m];
     }
-    if(sum==11) return(true);    
-    else return(false);
+    
+    for(int i = 0; i < length; i++)
+    {
+        if((i-n)<0) // если выходим за диапазон
+        {
+            array[i] = mas[length+i-n];
+            std::cout<<array[i];
+        }
+        else if((i-n)>length-1)
+        {
+            array[i] = mas[abs(length-i+n)];
+            std::cout<<array[i];           
+        }
+        else
+        {
+            array[i] = mas[i-n];
+            std::cout<<array[i];
+        }
+    }
+    
 }
 
-int main() { 
-    std::cout<<fun(5);
-
+int main() {
+    int m[] = {0,4,5,4,4,2,6,6,4,1};
+    fun(m,-5,10);
 
     return(0);
 }
-
-//Задать целочисленный массив, состоящий из элементов 0 и 1.
-//Например: [ 1, 1, 0, 0, 1, 0, 1, 1, 0, 0 ]. 
-// Написать функцию, заменяющую в принятом массиве 0 на 1, 1 на 0 
-// (** без применения if-else, switch, () ? :);
+// Написать функцию, которой на вход подаётся
+// одномерный массив и число n (может быть 
+// положительным, или отрицательным), при этом 
+// функция должна циклически сместить все элементы
+// массива на n позиций
